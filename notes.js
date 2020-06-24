@@ -2,7 +2,11 @@ const fs=require('fs')
 const chalk=require('chalk')
 
 const getNotes=()=>{
-    return 'Your Notes...'
+    console.log('Your Notes...')
+    const notes=loadNotes()
+    notes.forEach(note => {
+        console.log('Title : '+ note.title)    
+    });
 }
 
 const addNote=(title,body)=>{
@@ -40,6 +44,18 @@ const removeNote=(title)=>{
     }
 }
 
+const readNotes=(title)=>{
+    const notes=loadNotes()
+    const note=notes.find((note)=> note.title===title)
+    if(note){
+        console.log('Title:'+ note.title)
+        console.log('Body:' + note.body)
+    }
+    else{
+        console.log(chalk.red.inverse('No Note Found!'))
+    }
+}
+
 const saveNotes=(notes)=>{
     const dataJSON=JSON.stringify(notes)
     fs.writeFileSync('notes.json',dataJSON)
@@ -60,5 +76,6 @@ const loadNotes=()=>{
 module.exports={
     getNotes:getNotes,
     addNote:addNote,
-    removeNote:removeNote
+    removeNote:removeNote,
+    readNotes:readNotes
 }

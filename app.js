@@ -20,7 +20,7 @@ yargs.command({
 
 
     },
-    handle(argv){
+    handler(argv){
        notes.addNote(argv.title,argv.body)
     }
 })
@@ -46,7 +46,7 @@ yargs.command({
     command:'list',
     describe:'listing the notes',
     handler(){
-        console.log('list of notes!')
+        notes.getNotes()
     }
 })
 
@@ -54,8 +54,15 @@ yargs.command({
 yargs.command({
     command:'read',
     describe:'read notes',
-    handler(){
-        console.log('Reading the notes!')
+    builder:{
+        title:{
+            describe:'note title',
+            demandOption:true,
+            type:'string'
+        }
+    },
+    handler(argv){
+        notes.readNotes(argv.title)
     }
 })
 
